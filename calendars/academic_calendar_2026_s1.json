@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "semesterId": "2026-2027-1",
+  "academicYear": "2026/27",
+  "semesterNumber": 1,
+  "university": "BEIJING NORMAL-HONG KONG BAPTIST UNIVERSITY",
+  "title": "Academic Calendar of 2026/27 (Semester I)",
+  "shortTitle": "2026/27 第一学期校历",
+  "approvalInfo": "Approved by Senate via Circulation on 26 May 2026",
+  "startDate": "2026-08-31",
+  "endDate": "2027-01-11",
+  "firstDayOfClasses": "2026-09-01",
+  "lastDayOfClasses": "2026-12-11",
+  "totalWeeks": 16,
+  "holidays": [
+    {
+      "id": "mid-autumn",
+      "name": "中秋节 (Mid-Autumn Festival)",
+      "startDate": "2026-09-25",
+      "endDate": "2026-09-27",
+      "isClassSuspended": true,
+      "description": "中秋节法定假期，停课放假"
+    },
+    {
+      "id": "national-day",
+      "name": "国庆节假期 (National Day holidays)",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-07",
+      "isClassSuspended": true,
+      "description": "国庆节法定假期，停课放假"
+    },
+    {
+      "id": "reading-week",
+      "name": "Reading Week (自主阅读周)",
+      "startDate": "2026-10-19",
+      "endDate": "2026-10-25",
+      "isClassSuspended": true,
+      "targetStudentType": "UG",
+      "ugSuspended": true,
+      "pgSuspended": false,
+      "description": "第 8 周自主阅读周：本科生停课自修；研究生 (TPg/RPg) 正常排课与考查，不放假"
+    },
+    {
+      "id": "new-year",
+      "name": "元旦 (New Year holiday)",
+      "startDate": "2027-01-01",
+      "endDate": "2027-01-01",
+      "isClassSuspended": true,
+      "description": "元旦公休，停课放假"
+    },
+    {
+      "id": "chinese-new-year",
+      "name": "春节假期 (Chinese New Year holidays)",
+      "startDate": "2027-01-24",
+      "endDate": "2027-01-31",
+      "isClassSuspended": true,
+      "description": "春节寒假，大学关闭"
+    }
+  ],
+  "makeupDays": [
+    {
+      "date": "2026-09-20",
+      "sourceDayOfWeek": 7,
+      "targetDayOfWeek": 5,
+      "targetDayName": "周五",
+      "targetDate": "2026-09-25",
+      "targetWeek": 4,
+      "name": "补第四周周五课程 (Make-up for Week 4 Friday's class / 25 Sep)",
+      "reason": "中秋节调休 (补9月25日课程)",
+      "description": "9月20日 (周日) 为中秋节调休，补第四周 (双数周) 9月25日 (周五) 放假的课，按【周五课表】上课，全体教职工在岗 (All Staff on Duty)"
+    },
+    {
+      "date": "2026-10-10",
+      "sourceDayOfWeek": 6,
+      "targetDayOfWeek": 1,
+      "targetDayName": "周一",
+      "targetDate": "2026-10-05",
+      "targetWeek": 6,
+      "name": "补第六周周一课程 (Make-up for Week 6 Monday's class / 5 Oct)",
+      "reason": "国庆节调休 (补10月5日课程)",
+      "description": "10月10日 (周六) 为国庆节调休，补第六周 10月5日 (周一) 放假的课，按【周一课表】上课，全体教职工在岗 (All Staff on Duty)"
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-08-18",
+      "title": "Summer Term Ends (AY2025/26)",
+      "category": "ACADEMIC",
+      "weekNumber": null
+    },
+    {
+      "date": "2026-08-23",
+      "endDate": "2026-08-24",
+      "title": "Registration of Year 1 Students",
+      "category": "REGISTRATION",
+      "weekNumber": null
+    },
+    {
+      "date": "2026-08-25",
+      "endDate": "2026-08-31",
+      "title": "New Student Orientation & English Enhancement Programme",
+      "category": "ORIENTATION",
+      "weekNumber": null
+    },
+    {
+      "date": "2026-09-01",
+      "title": "Semester I Begins / First Day of Classes",
+      "category": "CLASSES_START",
+      "weekNumber": 1
+    },
+    {
+      "date": "2026-09-01",
+      "endDate": "2026-09-14",
+      "title": "Course Add/Drop (选退课期间)",
+      "category": "COURSE_SELECTION",
+      "weekNumber": 1
+    },
+    {
+      "date": "2026-09-20",
+      "title": "Make-up for 25 Sep (Week 4 Fri) class / All Staff on Duty (补9月25日第四周双数周课程)",
+      "category": "MAKE_UP",
+      "weekNumber": 4
+    },
+    {
+      "date": "2026-09-25",
+      "endDate": "2026-09-27",
+      "title": "Mid-Autumn Festival (中秋节)",
+      "category": "HOLIDAY",
+      "weekNumber": 4
+    },
+    {
+      "date": "2026-10-01",
+      "endDate": "2026-10-07",
+      "title": "National Day holidays (国庆节)",
+      "category": "HOLIDAY",
+      "weekNumber": 5
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Make-up for 5 Oct (Week 6 Mon) class / All Staff on Duty (补10月5日第六周周一课程)",
+      "category": "MAKE_UP",
+      "weekNumber": 6
+    },
+    {
+      "date": "2026-10-19",
+      "endDate": "2026-10-25",
+      "title": "Reading Week (自主阅读周 - 仅本科生放假，研究生正常上课)",
+      "category": "READING_WEEK",
+      "weekNumber": 8
+    },
+    {
+      "date": "2026-12-11",
+      "title": "Semester I Last Day of Classes (第一学期结课日)",
+      "category": "CLASSES_END",
+      "weekNumber": 14
+    },
+    {
+      "date": "2026-12-12",
+      "title": "Reserved for CET (大学英语四六级考试预留日)",
+      "category": "EXAM",
+      "weekNumber": 14
+    },
+    {
+      "date": "2026-12-13",
+      "endDate": "2026-12-15",
+      "title": "Revision for Final Examinations (期末考试复习)",
+      "category": "EXAM",
+      "weekNumber": 15
+    },
+    {
+      "date": "2026-12-16",
+      "endDate": "2026-12-27",
+      "title": "Semester I Final Examinations (期末考试周)",
+      "category": "EXAM",
+      "weekNumber": 16
+    },
+    {
+      "date": "2026-12-28",
+      "endDate": "2027-01-11",
+      "title": "Military Training for Year 1 Students (大一军训)",
+      "category": "TRAINING",
+      "weekNumber": null
+    },
+    {
+      "date": "2027-01-01",
+      "title": "New Year holiday (元旦假期)",
+      "category": "HOLIDAY",
+      "weekNumber": null
+    },
+    {
+      "date": "2027-01-06",
+      "title": "Faculty Board Meetings (学部委员会会议)",
+      "category": "MEETING",
+      "weekNumber": null
+    },
+    {
+      "date": "2027-01-08",
+      "title": "Senate Meeting (教务委员会会议)",
+      "category": "MEETING",
+      "weekNumber": null
+    },
+    {
+      "date": "2027-01-11",
+      "title": "Release of Grade Reports / Semester 1 Ends (成绩公布 / 第一学期结束)",
+      "category": "GRADE_RELEASE",
+      "weekNumber": null
+    },
+    {
+      "date": "2027-01-24",
+      "endDate": "2027-01-31",
+      "title": "Chinese New Year holidays (春节假期，大学关闭)",
+      "category": "HOLIDAY",
+      "weekNumber": null
+    }
+  ],
+  "remarks": [
+    "(1) Shaded areas: holidays;",
+    "(2) Regular classes will be arranged on Saturdays;",
+    "(3) The Semester I Make-up & Supplementary Examinations to be arranged at the beginning of the Semester II;",
+    "(4) The above arrangements are subject to change."
+  ],
+  "originalImageUrl": "https://raw.githubusercontent.com/fall2wish/B-Plan/main/calendars/academic_calendar_2026_s1.png",
+  "originalImageAsset": "calendar/academic_calendar_2026_s1.png"
+}

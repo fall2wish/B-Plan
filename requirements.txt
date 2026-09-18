@@ -1,0 +1,12 @@
+# B-Plan BNBU Campus Assistant - Core Dependencies & Tools
+httpx>=0.28.0
+requests>=2.32.0
+beautifulsoup4>=4.12.0
+pydantic>=2.10.0
+python-dotenv>=1.0.0
+icalendar>=6.1.0
+rich>=13.9.0
+
+# Optional: FastAPI service / reverse proxy
+fastapi>=0.115.0
+uvicorn>=0.34.0

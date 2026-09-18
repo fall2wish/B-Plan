@@ -1,0 +1,21 @@
+{
+  "name": "b-plan",
+  "version": "1.0.0",
+  "description": "B-Plan 是一款专为 BNBU (北师香港浸会大学) 学生打造的校园日程助手。",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "devtools": "chrome-devtools-mcp",
+    "debug:browser": "chrome-devtools-mcp --auto-connect",
+    "test": "pytest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "CC-BY-NC-SA-4.0",
+  "type": "commonjs",
+  "devDependencies": {
+    "chrome-devtools-mcp": "^1.9.0"
+  }
+}

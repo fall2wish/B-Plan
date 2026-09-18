@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name">B-Plan</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_timetable">Timetable</string>
+    <string name="nav_ddl">DDL</string>
+    <string name="nav_mail">Emails</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Timetable Screen -->
+    <string name="timetable_sub_title_format">%1$s · %2$s</string>
+    <string name="timetable_mode_overview">Overview</string>
+    <string name="timetable_mode_detail">Detail</string>
+    <string name="timetable_week_format">W%1$d (%2$s)</string>
+    <string name="timetable_week_single">Odd</string>
+    <string name="timetable_week_double">Even</string>
+    <string name="timetable_calendar_btn">Calendar</string>
+    <string name="timetable_add_course">Add Schedule</string>
+    <string name="timetable_makeup_badge">Make up %s</string>
+    <string name="timetable_makeup_course_badge">Make up %s</string>
+    <string name="timetable_holiday_badge">Holiday</string>
+    <string name="timetable_break_lunch">Lunch Break</string>
+    <string name="timetable_break_dinner">Dinner Break</string>
+    <string name="timetable_continuation">⇣ Continued</string>
+    <string name="timetable_no_slots_hint">No period slots configured. Please set them in Settings.</string>
+
+    <!-- Weekdays -->
+    <string name="day_mon">Mon</string>
+    <string name="day_tue">Tue</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thu">Thu</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+    <string name="day_sun">Sun</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings &amp; Sync Center</string>
+    <string name="settings_campus_identity">BNBU Campus Identity</string>
+    <string name="settings_sso_authorized">SSO Authorized</string>
+    <string name="settings_sso_unauthorized">Unauthorized / Not Logged In</string>
+    <string name="settings_bind_identity_title">Tap to Bind Campus Identity</string>
+    <string name="settings_bind_identity_subtitle">Link student ID to sync GSAS courses and iSpace assignments</string>
+    <string name="settings_student_id_prefix">Student ID: %s</string>
+    <string name="settings_student_id_unbound">Student ID: Not linked</string>
+    <string name="auth_dialog_title">Campus Identity &amp; Auth</string>
+    <string name="auth_dialog_subtitle">Configure student profile and platform access credentials</string>
+    <string name="auth_name_label">Student Name</string>
+    <string name="auth_name_placeholder">e.g. San ZHANG</string>
+    <string name="auth_student_id_label">Student ID</string>
+    <string name="auth_student_id_placeholder">e.g. s123456789</string>
+    <string name="auth_programme_label">Programme / Major</string>
+    <string name="auth_programme_placeholder">e.g. Master of Science in Data Science</string>
+    <string name="auth_credentials_section">System Sync Credentials (Optional / Configurable)</string>
+    <string name="auth_gsas_token_label">GSAS Access-Token (Optional, for timetable sync)</string>
+    <string name="auth_ispace_cookie_label">iSpace MoodleSession Cookie (Optional, for homework sync)</string>
+    <string name="auth_save_btn">Save &amp; Authorize</string>
+    <string name="auth_logout_btn">Log Out / Unbind</string>
+    <string name="timetable_empty_title">No courses scheduled</string>
+    <string name="timetable_empty_desc">Sync timetable in Settings, or tap [+] above to add manually</string>
+    <string name="ddl_empty_desc">Sync assignments in Settings, or tap [+] below to add a task</string>
+
+    <string name="settings_sync_title">Academic &amp; Learning Sync</string>
+    <string name="settings_gsas_title">GSAS Timetable System</string>
+    <string name="settings_gsas_courses_count">%d courses enrolled</string>
+    <string name="settings_gsas_sync_btn">Sync Timetable</string>
+    <string name="settings_gsas_syncing">Connecting to GSAS...</string>
+    <string name="settings_gsas_sync_success">Connected to GSAS. Last synced: Just now</string>
+
+    <string name="settings_ispace_title">iSpace (Moodle) Homework</string>
+    <string name="settings_ispace_ddls_count">%d DDLs</string>
+    <string name="settings_ispace_sync_btn">Sync Homework</string>
+    <string name="settings_ispace_syncing">Fetching iSpace assignments...</string>
+    <string name="settings_ispace_sync_success">Connected to iSpace. 3 assignments synced</string>
+
+    <string name="settings_calendar_title">Academic Calendar</string>
+    <string name="settings_calendar_weeks_format">Duration: %1$s ~ %2$s · %3$d Teaching Weeks</string>
+    <string name="settings_calendar_view_btn">View Academic Calendar</string>
+    <string name="settings_calendar_refresh_btn">Refresh Calendar</string>
+
+    <string name="settings_rules_title">Schedule &amp; Semester Rules</string>
+    <string name="settings_current_teaching_week">Current Teaching Week</string>
+    <string name="settings_teaching_week_format">Week %1$d (%2$s)</string>
+    <string name="settings_period_slots">Period Slots Schedule</string>
+    <string name="settings_period_slots_count">%d period slots</string>
+
+    <string name="settings_general_title">General &amp; Language</string>
+    <string name="settings_language">Language Settings</string>
+
+    <string name="settings_mail_title">Campus Mail &amp; Sync</string>
+    <string name="settings_mail_protocol">Mail Protocol (POP3 / IMAP)</string>
+    <string name="settings_mail_account">Linked Mail Account</string>
+    <string name="settings_mail_config_btn">Mail Settings</string>
+    <string name="settings_mail_fetch_btn">Fetch Mail Now</string>
+
+    <string name="settings_export_title">Export Calendar (.ics)</string>
+    <string name="settings_export_desc">Export the entire semester courses and personal events to a universal .ics file, supporting Apple Calendar, Google Calendar, and Outlook.</string>
+    <string name="settings_export_btn">Export Timetable to System Calendar (.ics)</string>
+    <string name="settings_last_sync">Last sync: %s</string>
+    <string name="settings_sync_never">Never</string>
+
+    <string name="settings_data_title">Data Reset</string>
+    <string name="settings_data_desc">Clear all locally synced courses, assignments, and events while preserving login credentials.</string>
+    <string name="settings_reset_btn">Reset Local Data</string>
+    <string name="dialog_reset_title">Confirm Data Reset?</string>
+    <string name="dialog_reset_message">All locally identified courses, assignments, and schedule events will be cleared. Account login credentials will be preserved.\n\nYou can re-sync anytime by tapping [Sync Timetable] or [Sync Assignments].</string>
+    <string name="dialog_reset_confirm">Reset All</string>
+
+    <string name="settings_about_title">About B-Plan</string>
+    <string name="settings_about_desc">B-Plan is a campus schedule and assignment manager tailored for BNBU students, providing one-stop synchronization for timetable, iSpace deadlines, and campus events.</string>
+    <string name="settings_version_info">Version: 1.0.0 (Release) · License: CC BY-NC-SA 4.0\nAcademic Year: 2026-2027 Semester 1</string>
+
+    <!-- Academic Calendar Dialog -->
+    <string name="calendar_dialog_title">2026/27 Semester 1 Academic Calendar</string>
+    <string name="calendar_dialog_subtitle">BNBU · Approved by Senate</string>
+    <string name="calendar_makeup_section_title">Make-up &amp; Holiday Arrangements</string>
+    <string name="calendar_makeup_section_desc">According to the academic calendar, the following are make-up days. The app automatically maps courses to target weekdays:</string>
+    <string name="calendar_holiday_section_title">Public Holidays &amp; Suspensions</string>
+    <string name="calendar_holiday_suspended_badge">Class Suspended</string>
+    <string name="calendar_milestones_title">Key Academic Milestones</string>
+    <string name="calendar_remarks_title">Official Remarks:</string>
+    <string name="calendar_btn_close">Back to Timetable</string>
+
+    <!-- Language Selection Dialog -->
+    <string name="dialog_language_title">Select Language / 選擇語言</string>
+    <string name="lang_zh_cn">简体中文</string>
+    <string name="lang_zh_hk">繁體中文 (香港)</string>
+    <string name="lang_en">English</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- DDL Screen -->
+    <string name="ddl_title">DDL</string>
+    <string name="ddl_filter_pending">Pending</string>
+    <string name="ddl_filter_submitted">Submitted</string>
+    <string name="ddl_filter_all">All</string>
+    <string name="ddl_add_title">Add Assignment DDL</string>
+
+    <!-- Mail Screen -->
+    <string name="mail_screen_title">Campus Emails &amp; Schedule</string>
+    <string name="mail_screen_subtitle">Supporting BNBU Mail · Smart schedule &amp; venue extraction</string>
+    <string name="mail_sync_now">Fetch Emails Now</string>
+    <string name="mail_settings_btn">Mail Settings</string>
+    <string name="mail_connected">Connected</string>
+    <string name="mail_not_connected">Not Connected</string>
+    <string name="mail_account_prefix">Account: %s</string>
+    <string name="mail_empty">No campus emails in inbox</string>
+
+    <!-- Student Type & Reading Week -->
+    <string name="student_type_title">Student Category</string>
+    <string name="student_type_ug">Undergraduate (UG)</string>
+    <string name="student_type_ug_desc">Reading Week (Week 8) holiday recess, no formal classes</string>
+    <string name="student_type_pg">Postgraduate (PG / TPg / RPg)</string>
+    <string name="student_type_pg_desc">Reading Week not suspended, courses and assessments proceed as normal</string>
+    <string name="student_type_dialog_title">Select Student Category</string>
+    <string name="student_type_dialog_desc">Used to determine calendar recesses. Reading Week is a holiday for Undergraduates, while Postgraduates have regular classes.</string>
+    <string name="calendar_holiday_ug_only_badge">UG Suspended · PG Regular Classes</string>
+    <string name="calendar_holiday_all_badge">University-wide Recess</string>
+    <string name="timetable_reading_week_pg_badge">Reading Wk (Class)</string>
+    <string name="calendar_view_original_image">Verify Official Calendar Image</string>
+    <string name="calendar_image_viewer_title">Official Senate-Approved Calendar</string>
+    <string name="calendar_image_viewer_desc">Official calendar copy approved by Senate for verifying structured data accuracy</string>
+</resources>

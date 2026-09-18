@@ -1,0 +1,11 @@
+[project]
+name = "b-plan"
+version = "0.1.0"
+description = "BNBU Campus Assistant: Timetable, iSpace DDLs, and Mail-to-Schedule Client"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,233 @@
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+with B-Plan Software Non-Commercial & Share-Alike Copyleft Rider
+
+Copyright (c) 2026 fall2wish. All rights reserved.
+
+================================================================================
+【核心协议摘要 / CORE LICENSING SUMMARY】
+================================================================================
+本软件受本许可证严格约束。在获取、复制、修改、运行或分发本软件或其任何部分时，
+您必须无条件接受以下全部条款：
+
+1. 【除本人外禁止商用 / NON-COMMERCIAL RESTRICTION (NC)】：
+   除原作者本人（fall2wish）外，严格禁止任何个人、团队、组织、商业机构或企事业单位
+   将本软件、其衍生作品、源代码、编译产物或相关数据用于任何直接或间接的商业营利目的。
+   禁止行为包括但不限于：付费下载、增值收费、植入广告、付费订阅、技术变相收费、
+   转售盈利、商业 SaaS 托管服务，以及将本项目代码作为商业闭源产品的一部分进行集成。
+   原作者（fall2wish）独家保留本项目的全部商业化使用与商业授权之权利。
+
+2. 【只要用了本项目也必须开源 / STRICT VIRAL SHARE-ALIKE / COPYLEFT (SA)】：
+   任何个人或组织凡以任何形式使用、派生、修改、重构、包装、静态/动态链接或嵌入本项目
+   之代码，其衍生作品、修改作品或整体结合工程【必须无条件完全开源】。
+   该衍生作品必须且只能依据与本协议相同（或兼容更高传染性要求）之 CC BY-NC-SA 4.0 
+   条款公开发布其完整源代码，不得以任何商业专有形式、闭源形态或限制性授权进行发布。
+
+3. 【必须署名 / ATTRIBUTION (BY)】：
+   分发、展示或二次开发本软件时，必须清晰保留原作者（fall2wish）之署名、原始开源仓库链接
+   及本许可证完整声明。
+
+4. 【免责与无担保 / NO WARRANTY & DISCLAIMER】：
+   本软件按“现状 (AS IS)”提供，作者不承担因使用本软件导致的任何直接、间接或学业财产损失。
+================================================================================
+
+--------------------------------------------------------------------------------
+第一部分：B-Plan 软件反商用与传染性开源专用条款 (Software Copyleft Rider)
+--------------------------------------------------------------------------------
+
+第 1 条 定义与适用范围
+1.1 “本软件”指由 fall2wish 发起并维护的 B-Plan 及其所有源代码、脚本、配置文件、设计素材、
+    文档、测试套件及编译生成的二进制文件（包括但不限于 Android APK、AAB、Jar、AAR、Python 模块）。
+1.2 “商业用途”指主要用于获取商业利益、资金对价或直接/间接货币补偿的任何使用行为，包括但不限于：
+    (a) 直接或间接出售本软件、其镜像安装包或其衍生品；
+    (b) 在应用内集成收费墙、会员收费体系、打赏限制、付费解锁功能；
+    (c) 集成任何形式的第三方商业广告 SDK、变现推广链接或商业引流模块；
+    (d) 作为任何收费软件、收费服务、商业平台或私有 SaaS 服务的前端组件、数据采集引擎或后台服务；
+    (e) 商业公司以盈利为目的内部大规模部署并对外提供收费支持服务。
+1.3 “衍生作品”指对本软件进行修改、翻译、移植、增补、模块抽取、二次封装、重命名再分发，
+    或在任何工程中通过源码引用、库依赖、模块链接形式包含本软件任何部分所形成的任何作品。
+
+第 2 条 商业权利专有保留 (Exclusive Commercial Reservation)
+2.1 商业化专属特权：本软件的全球商业化使用权、商业授权发售权、商标使用权及商业衍生开发权，
+    【完全且排他性地专属于原作者本人（fall2wish）】。
+2.2 第三方商用绝对禁止：未经原作者事先明确、独立且正式的书面商业许可，任何第三方个人、团队、
+    学校学生组织、商业公司或法律实体，均无权将本软件或其衍生作品用于任何形式的商业用途。
+2.3 商业授权申请：任何组织如确有正当商业合作或定制化部署需求，须事先联系原作者并签订正式商业授权协议。
+
+第 3 条 强传染性开源与完整源码强制公开义务 (Viral Share-Alike Mandate)
+3.1 传染性开源约束：若您依据本软件创作、衍生、派生任何作品，或将本软件（无论修改与否）作为组件
+    集成至其他项目，您【必须】将该衍生作品或结合作品整体在公开网络平台上免费开源全部源代码。
+3.2 同等协议要求：所有衍生作品必须且只能在 Creative Commons Attribution-NonCommercial-ShareAlike 
+    4.0 International (CC BY-NC-SA 4.0) 及本补充条款相同约束下进行许可与分发。
+3.3 严禁闭源保护与限制升级：严禁任何人对本软件或其衍生作品施加任何形式的技术防护手段（DRM）、
+    专有闭源协议、反逆向条款或专利排他主张，以限制后续用户获取、查阅其源代码或剥夺其开源权利。
+
+第 4 条 违约制裁与授权终止 (Termination & Legal Remedies)
+4.1 自动终止：若您违反本许可证的任何条款（包括但不限于未经授权商用、未按要求公开全部源码、
+    抹除原作者署名等），您依据本许可证所获得的全部权利将于违约发生之日起【立即且自动终止】。
+4.2 法律追责：授权终止后，您持有、分发本软件或其衍生作品的行为即构成对原作者著作权的直接侵权。
+    原作者依法保留向人民法院申请责令停止侵权行为、销毁侵权产物、追索全部非法获利并赔偿经济及
+    维权损失之全部诉讼权利。
+
+第 5 条 知识产权防御与第三方合规
+5.1 商标保留：本协议不授予任何使用本软件名称、项目 Logo、原作者姓名或北师香港浸会大学（BNBU）
+    校名校标进行商业宣传、广告代言或虚假背书之权利。
+5.2 免责声明：原作者对使用本软件产生的学业差错、网络安全后果或数据误差完全免责，详见项目 README。
+
+--------------------------------------------------------------------------------
+第二部分：Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+--------------------------------------------------------------------------------
+
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
+
+By exercising the Licensed Rights (defined below), You accept and agree to be bound 
+by the terms and conditions of this Creative Commons Attribution-NonCommercial-ShareAlike 
+4.0 International Public License ("Public License"). To the extent this Public License 
+may be interpreted as a contract, You are granted the Licensed Rights in consideration 
+of Your acceptance of these terms and conditions, and the Licensor grants You such rights 
+in consideration of benefits the Licensor receives from making the Licensed Material 
+available under these terms and conditions.
+
+Section 1 -- Definitions.
+
+a. Adapted Material means material that is subject to Copyright and Similar Rights that 
+   is derived from or based upon the Licensed Material and in which the Licensed Material 
+   is translated, altered, arranged, transformed, or otherwise modified in a manner requiring 
+   permission under the Copyright and Similar Rights held by the Licensor.
+b. Adapter's License means the license You apply to Your Copyright and Similar Rights 
+   in Your contributions to Adapted Material in accordance with the terms and conditions 
+   of this Public License.
+c. BY-NC-SA Compatible License means a license that is listed at creativecommons.org/compatiblelicenses.
+d. Copyright and Similar Rights means copyright and/or similar rights closely related to copyright 
+   including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights.
+e. Effective Technological Measures means those measures that, in the absence of proper authority, 
+   may not be circumvented under laws fulfilling obligations under Article 11 of the WIPO Copyright Treaty.
+f. Exceptions and Limitations means fair use, fair dealing, and/or any other exception or limitation 
+   to Copyright and Similar Rights that applies to Your use of the Licensed Material.
+g. License Elements means the license attributes listed in the name of a Creative Commons Public License: 
+   Attribution, NonCommercial, and ShareAlike.
+h. Licensed Material means the artistic or literary work, database, or other material to which 
+   the Licensor applied this Public License.
+i. Licensed Rights means the rights granted to You subject to the terms and conditions of this Public License.
+j. Licensor means the individual(s) or entity(ies) granting rights under this Public License (fall2wish).
+k. NonCommercial means not primarily intended for or directed towards commercial advantage or monetary compensation.
+l. Share means to provide material to the public by any means or process that requires permission under the Licensed Rights.
+m. Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament.
+n. You means the individual or entity exercising the Licensed Rights under this Public License.
+
+Section 2 -- Scope.
+
+a. License grant.
+   1. Subject to the terms and conditions of this Public License, the Licensor hereby grants You a 
+      worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise 
+      the Licensed Rights in the Licensed Material to:
+      a. reproduce and Share the Licensed Material, in whole or in part, for NonCommercial purposes only; and
+      b. produce, reproduce, and Share Adapted Material for NonCommercial purposes only.
+   2. Exceptions and Limitations. For the avoidance of doubt, where Exceptions and Limitations apply to 
+      Your use, this Public License does not apply, and You do not need to comply with its terms and conditions.
+   3. Term. The term of this Public License is specified in Section 6(a).
+   4. Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the 
+      Licensed Rights in all media and formats whether now known or hereafter created, and to make technical 
+      modifications necessary for that purpose.
+   5. Downstream recipients.
+      a. Offer from the Licensor -- Licensed Material. Every recipient of the Licensed Material automatically 
+         receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions 
+         of this Public License.
+      b. Additional offer from the Licensor -- Adapted Material. Every recipient of Adapted Material from You 
+         automatically receives an offer from the Licensor to exercise the Licensed Rights in the Adapted 
+         Material under the conditions of the Adapter's License You apply.
+      c. No downstream restrictions. You may not offer or impose any additional or different terms or conditions 
+         on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise 
+         of the Licensed Rights by any recipient of the Licensed Material.
+   6. No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert 
+      or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, 
+      endorsed, or granted official status by, the Licensor or others.
+
+Section 3 -- License Conditions.
+
+Your exercise of the Licensed Rights is expressly made subject to the following conditions:
+
+a. Attribution.
+   1. If You Share the Licensed Material (including in modified form), You must:
+      a. retain the following if it is supplied by the Licensor with the Licensed Material:
+         i. identification of the creator(s) of the Licensed Material (fall2wish) and any others designated 
+            to receive attribution;
+         ii. a copyright notice;
+         iii. a notice that refers to this Public License;
+         iv. a notice that refers to the disclaimer of warranties;
+         v. a URI or hyperlink to the Licensed Material to the extent reasonably practicable;
+      b. indicate if You modified the Licensed Material and retain an indication of any previous modifications; and
+      c. indicate the Licensed Material is licensed under this Public License, and include the text of, 
+         or the URI or hyperlink to, this Public License.
+   2. You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, 
+      and context in which You Share the Licensed Material.
+
+b. NonCommercial.
+   You may not exercise the Licensed Rights granted in Section 2(a) for Commercial purposes.
+
+c. ShareAlike.
+   In addition to the conditions in Section 3(a), if You Share Adapted Material You produce, 
+   the following conditions also apply:
+   1. The Adapter's License You apply must be a Creative Commons license with the same License Elements, 
+      this version or later, or a BY-NC-SA Compatible License.
+   2. You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. 
+      You may satisfy this condition in any reasonable manner based on the medium, means, and context 
+      in which You Share Adapted Material.
+   3. You may not offer or impose any additional or different terms or conditions on, or apply any 
+      Effective Technological Measures to, Adapted Material that restrict exercise of the rights granted 
+      under the Adapter's License You apply.
+
+Section 4 -- Disclaimer of Warranties and Limitation of Liability.
+
+a. Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers 
+   the Licensed Material as-is and as-available, and makes no representations or warranties of any kind 
+   concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without 
+   limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, 
+   absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known 
+   or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer 
+   may not apply to You.
+b. To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, 
+   without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, 
+   punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License 
+   or use of the Licensed Material, even if the Licensor has been advised of the possibility of such 
+   losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, 
+   this limitation may not apply to You.
+c. The disclaimer of warranties and limitation of liability provided above shall be interpreted in a 
+   manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
+
+Section 5 -- Term and Termination.
+
+a. This Public License applies for the term of the Copyright and Similar Rights licensed here. However, 
+   if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
+b. Where Your right to use the Licensed Material has terminated under Section 5(a), it reinstates:
+   1. automatically as of the date the violation is cured, provided it is cured within 30 days of Your 
+      discovery of the violation; or
+   2. upon express reinstatement by the Licensor.
+   For the avoidance of doubt, this Section 5(b) does not affect any right the Licensor may have to seek 
+   remedies for Your violations of this Public License.
+c. For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms 
+   or conditions or stop distributing the Licensed Material at any time; however, doing so will not 
+   terminate this Public License.
+d. Sections 1, 4, 5, 6, and 7 survive termination of this Public License.
+
+Section 6 -- Other Terms and Conditions.
+
+a. The Licensor shall not be bound by any additional or different terms or conditions communicated by You 
+   unless expressly agreed.
+b. Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein 
+   are separate from and independent of the terms and conditions of this Public License.
+
+Section 7 -- Interpretation.
+
+a. For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, 
+   limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully 
+   be made without permission under this Public License.
+b. To the extent possible, if any provision of this Public License is deemed unenforceable, it shall 
+   be automatically reformed to the minimum extent necessary to make it enforceable. If the provision 
+   cannot be reformed, it shall be severed from this Public License without affecting the enforceability 
+   of the remaining terms and conditions.
+c. No term or condition of this Public License will be waived and no failure to comply consented to 
+   unless expressly agreed to by the Licensor.
+d. Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, 
+   any privileges and immunities that apply to the Licensor or You, including from the legal processes 
+   of any jurisdiction or authority.
+

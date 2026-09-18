@@ -1,0 +1,163 @@
+<resources>
+    <string name="app_name">B-Plan</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_timetable">课表</string>
+    <string name="nav_ddl">DDL</string>
+    <string name="nav_mail">邮件日程</string>
+    <string name="nav_settings">设置</string>
+
+    <!-- Timetable Screen -->
+    <string name="timetable_sub_title_format">%1$s · %2$s</string>
+    <string name="timetable_mode_overview">概览</string>
+    <string name="timetable_mode_detail">细节</string>
+    <string name="timetable_week_format">第 %1$d 周 (%2$s)</string>
+    <string name="timetable_week_single">单</string>
+    <string name="timetable_week_double">双</string>
+    <string name="timetable_calendar_btn">校历</string>
+    <string name="timetable_add_course">添加日程</string>
+    <string name="timetable_makeup_badge">补%s</string>
+    <string name="timetable_makeup_course_badge">补%s课</string>
+    <string name="timetable_holiday_badge">放假</string>
+    <string name="timetable_break_lunch">午休</string>
+    <string name="timetable_break_dinner">晚休</string>
+    <string name="timetable_continuation">⇣ 接上节</string>
+    <string name="timetable_no_slots_hint">暂无节次设置，请在设置中配置或恢复预设</string>
+
+    <!-- Weekdays -->
+    <string name="day_mon">周一</string>
+    <string name="day_tue">周二</string>
+    <string name="day_wed">周三</string>
+    <string name="day_thu">周四</string>
+    <string name="day_fri">周五</string>
+    <string name="day_sat">周六</string>
+    <string name="day_sun">周日</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">设置与同步中心</string>
+    <string name="settings_campus_identity">BNBU 校园认证身份</string>
+    <string name="settings_sso_authorized">SSO 已授权</string>
+    <string name="settings_sso_unauthorized">未认证 / 未登录</string>
+    <string name="settings_bind_identity_title">点击绑定校园身份</string>
+    <string name="settings_bind_identity_subtitle">绑定学号后可一键同步教务课表与 iSpace 作业</string>
+    <string name="settings_student_id_prefix">学号: %s</string>
+    <string name="settings_student_id_unbound">学号: 未绑定</string>
+    <string name="auth_dialog_title">校园身份与认证管理</string>
+    <string name="auth_dialog_subtitle">设置真实学生信息与教务/教学平台访问凭证</string>
+    <string name="auth_name_label">学生姓名</string>
+    <string name="auth_name_placeholder">例如: 张三 (San ZHANG)</string>
+    <string name="auth_student_id_label">学号</string>
+    <string name="auth_student_id_placeholder">例如: s123456789</string>
+    <string name="auth_programme_label">专业 / 专业方向</string>
+    <string name="auth_programme_placeholder">例如: Master of Science in Data Science</string>
+    <string name="auth_credentials_section">系统同步访问凭证 (选填 / 独立配置)</string>
+    <string name="auth_gsas_token_label">GSAS Access-Token (选填，用于同步课表)</string>
+    <string name="auth_ispace_cookie_label">iSpace MoodleSession Cookie (选填，用于同步作业)</string>
+    <string name="auth_save_btn">保存并授权</string>
+    <string name="auth_logout_btn">退出登录 / 解除绑定</string>
+    <string name="timetable_empty_title">当前暂无课程</string>
+    <string name="timetable_empty_desc">请前往【设置】同步教务课表，或点击右上角【+】手动添加</string>
+    <string name="ddl_empty_desc">请前往【设置】同步 iSpace 作业，或点击右下角【+】新建待办</string>
+
+    <string name="settings_sync_title">教务与教学平台同步</string>
+    <string name="settings_gsas_title">GSAS 教务系统课表</string>
+    <string name="settings_gsas_courses_count">已收录 %d 门课</string>
+    <string name="settings_gsas_sync_btn">同步课表</string>
+    <string name="settings_gsas_syncing">正在连接教务系统...</string>
+    <string name="settings_gsas_sync_success">已连接教务系统，最近一次同步: 刚刚</string>
+
+    <string name="settings_ispace_title">iSpace (Moodle) 作业平台</string>
+    <string name="settings_ispace_ddls_count">%d 项 DDL</string>
+    <string name="settings_ispace_sync_btn">同步作业</string>
+    <string name="settings_ispace_syncing">正在拉取 iSpace 作业...</string>
+    <string name="settings_ispace_sync_success">已连接 iSpace，已同步最新 3 项作业</string>
+
+    <string name="settings_calendar_title">官方学期校历</string>
+    <string name="settings_calendar_weeks_format">起止: %1$s ~ %2$s · 共 %3$d 个教学周</string>
+    <string name="settings_calendar_view_btn">查看官方校历</string>
+    <string name="settings_calendar_refresh_btn">刷新校历</string>
+
+    <string name="settings_rules_title">作息规则与学期参数</string>
+    <string name="settings_current_teaching_week">当前教学周</string>
+    <string name="settings_teaching_week_format">第 %1$d 周 (%2$s)</string>
+    <string name="settings_period_slots">课程节次时间列表</string>
+    <string name="settings_period_slots_count">%d 个节次配置</string>
+
+    <string name="settings_general_title">通用与语言偏好</string>
+    <string name="settings_language">多语言设置</string>
+
+    <string name="settings_mail_title">校园邮箱协议与同步</string>
+    <string name="settings_mail_protocol">收信协议 (POP3 / IMAP)</string>
+    <string name="settings_mail_account">绑定邮箱账号</string>
+    <string name="settings_mail_config_btn">邮箱与协议设置</string>
+    <string name="settings_mail_fetch_btn">立即收取邮件</string>
+
+    <string name="settings_export_title">导出日历 (.ics)</string>
+    <string name="settings_export_desc">将整学期的全量课程与个人日程导出为通用 .ics 文件，支持直接同步到系统自带日历、Outlook 或 Google Calendar。</string>
+    <string name="settings_export_btn">导出全学期课表至系统日历 (.ics)</string>
+
+    <string name="settings_last_sync">最近一次同步：%s</string>
+    <string name="settings_sync_never">未同步</string>
+
+    <string name="settings_data_title">数据重置</string>
+    <string name="settings_data_desc">清空本地已识别和同步的全部课表、待办作业与邮件日程，保留账号登录认证状态。</string>
+    <string name="settings_reset_btn">重置本地数据</string>
+    <string name="dialog_reset_title">确认重置本地数据？</string>
+    <string name="dialog_reset_message">将清空本地已识别和同步的所有课表、作业与邮件日程，保留账号登录认证状态。\n\n重置后可随时点击上方的【同步课表】与【同步作业】重新拉取最新数据。</string>
+    <string name="dialog_reset_confirm">确认重置</string>
+
+    <string name="settings_about_title">关于 B-Plan</string>
+    <string name="settings_about_desc">B-Plan 是专为北师香港浸会大学 (BNBU) 学子研发的校园日程与作业管家，提供教务课表、iSpace 作业待办与校园日程一站式同步服务。</string>
+    <string name="settings_version_info">版本: 1.0.0 (Release) · 协议: CC BY-NC-SA 4.0\n适用: 2026-2027 学年第一学期</string>
+
+    <!-- Academic Calendar Dialog -->
+    <string name="calendar_dialog_title">2026/27 第一学期校历</string>
+    <string name="calendar_dialog_subtitle">BNBU · 校务委员会核准</string>
+    <string name="calendar_makeup_section_title">补课与调休安排 (Make-up for Holidays)</string>
+    <string name="calendar_makeup_section_desc">根据校历，以下日期为补课日（Make-up Day）。软件已自动在对应教学周将课程映射为补课星期的日程：</string>
+    <string name="calendar_holiday_section_title">法定节假日与停课周</string>
+    <string name="calendar_holiday_suspended_badge">停课放假</string>
+    <string name="calendar_milestones_title">学期关键教学节点</string>
+    <string name="calendar_remarks_title">校历官方说明 (Remarks):</string>
+    <string name="calendar_btn_close">返回课表</string>
+
+    <!-- Language Selection Dialog -->
+    <string name="dialog_language_title">选择语言 / 選擇語言 / Language</string>
+    <string name="lang_zh_cn">简体中文</string>
+    <string name="lang_zh_hk">繁體中文 (香港)</string>
+    <string name="lang_en">English</string>
+    <string name="btn_confirm">确定</string>
+    <string name="btn_cancel">取消</string>
+
+    <!-- DDL Screen -->
+    <string name="ddl_title">DDL</string>
+    <string name="ddl_filter_pending">待办</string>
+    <string name="ddl_filter_submitted">已提交</string>
+    <string name="ddl_filter_all">全部</string>
+    <string name="ddl_add_title">添加作业 DDL</string>
+
+    <!-- Mail Screen -->
+    <string name="mail_screen_title">校园邮件与智能日程</string>
+    <string name="mail_screen_subtitle">支持 BNBU 校园邮箱 · 智能提取活动时间与地点</string>
+    <string name="mail_sync_now">收取最新邮件</string>
+    <string name="mail_settings_btn">邮箱与协议设置</string>
+    <string name="mail_connected">邮箱已连接</string>
+    <string name="mail_not_connected">未连接</string>
+    <string name="mail_account_prefix">账号: %s</string>
+    <string name="mail_empty">收件箱暂无校园邮件</string>
+
+    <!-- Student Type & Reading Week -->
+    <string name="student_type_title">学生身份类型</string>
+    <string name="student_type_ug">本科生 (Undergraduate / UG)</string>
+    <string name="student_type_ug_desc">享受第 8 周自主阅读周 (Reading Week) 放假停课，无正课排课</string>
+    <string name="student_type_pg">研究生 (Postgraduate / PG)</string>
+    <string name="student_type_pg_desc">自主阅读周不放假，课程教学与考查考核照常进行</string>
+    <string name="student_type_dialog_title">选择学生身份类型</string>
+    <string name="student_type_dialog_desc">用于精准匹配 BNBU 校历停课规则。自主阅读周本科生停课自修，研究生正常上课。</string>
+    <string name="calendar_holiday_ug_only_badge">仅本科生停课 · 研究生正常上课</string>
+    <string name="calendar_holiday_all_badge">全校停课放假</string>
+    <string name="timetable_reading_week_pg_badge">读书周(有课)</string>
+    <string name="calendar_view_original_image">核对官方校历原图</string>
+    <string name="calendar_image_viewer_title">官方校历核准原图</string>
+    <string name="calendar_image_viewer_desc">大学校务委员会正式核准件，供学生核对结构化校历识别准确性</string>
+</resources>

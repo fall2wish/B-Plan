@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 全局网络安全基线：
+         1. 彻底禁止所有明文 HTTP 传输 (cleartextTrafficPermitted="false")
+         2. 仅信任 Android 系统内置的正规权威 CA 证书 (src="system")
+         3. 彻底屏蔽所有用户自签名根证书 (不配置 src="user")
+         -> 防御效果：
+            - 防止局域网 Wi-Fi 明文嗅探与数据窃听；
+            - 防止使用 Charles, Fiddler, Burp Suite, mitmproxy 等抓包工具通过安装用户证书进行中间人解密；
+            - 完美兼容正规校园网与校外 VPN（如 EasyConnect, 校园隧道, WireGuard 等，它们通过网络层 TUN 转发流量，不篡改证书链）。
+    -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 校园网核心系统域名配置 -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">bnbu.edu.cn</domain>
+        <domain includeSubdomains="true">exmail.qq.com</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+</network-security-config>
