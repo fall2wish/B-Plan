@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import cn.edu.bnbu.bplan.data.model.*
 import cn.edu.bnbu.bplan.data.security.SecureCredentialManager
+import cn.edu.bnbu.bplan.data.security.SilentCampusAuthEngine
 import cn.edu.bnbu.bplan.data.security.TrustedTimeManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,6 +21,15 @@ class BPlanRepository(private val context: Context) {
     private val gson = Gson()
 
     val secureCredentialManager = SecureCredentialManager(context)
+
+    val silentAuthEngine = SilentCampusAuthEngine(context, this)
+    val isSilentAuthenticating: StateFlow<Boolean> = silentAuthEngine.isAuthenticating
+    val silentAuthProgress: StateFlow<String> = silentAuthEngine.progressMessage
+    val requiresManualIntervention: StateFlow<Boolean> = silentAuthEngine.requiresManualIntervention
+
+    fun resetManualInterventionFlag() {
+        silentAuthEngine.resetFailureCount()
+    }
 
     private val _hasSecureCredentials = MutableStateFlow(secureCredentialManager.hasCampusCredentials())
     val hasSecureCredentials: StateFlow<Boolean> = _hasSecureCredentials.asStateFlow()
@@ -68,9 +78,21 @@ class BPlanRepository(private val context: Context) {
 
     fun setStudentType(type: StudentType) {
         _studentType.value = type
+        calendarManager.setStudentType(type)
         if (_hasAgreedUserAgreement.value) {
             prefs.edit().putString("student_type", type.code).apply()
         }
+        updateCurrentWeekForToday()
+    }
+
+    fun updateCurrentWeekForToday() {
+        try {
+            val todayStr = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+                .format(java.util.Date(TrustedTimeManager.getTrustedTimeMillis()))
+            val wk = calendarManager.calculateWeekNumber(todayStr, _studentType.value)
+            val maxWk = if (_studentType.value == StudentType.POSTGRADUATE) 14 else 16
+            _currentWeek.value = wk.coerceIn(1, maxWk)
+        } catch (_: Exception) {}
     }
 
     private val _isSsoAuthorized = MutableStateFlow(prefs.getBoolean("is_sso_authorized", false))
@@ -101,7 +123,8 @@ class BPlanRepository(private val context: Context) {
         _isSsoAuthorized.value = isAuthorized
 
         if (!prefs.contains("student_type")) {
-            _studentType.value = inferStudentType(id, prog)
+            val inferred = inferStudentType(id, prog)
+            setStudentType(inferred)
         }
 
         val editor = prefs.edit()
@@ -285,7 +308,9 @@ class BPlanRepository(private val context: Context) {
         set(value) = prefs.edit().putBoolean("user_has_reset_data", value).apply()
 
     init {
+        calendarManager.setStudentType(_studentType.value)
         loadData()
+        updateCurrentWeekForToday()
     }
 
     private fun loadData() {
@@ -520,7 +545,7 @@ class BPlanRepository(private val context: Context) {
         if (!prefs.contains("student_type")) {
             val courseCodes = newCourses.mapNotNull { it.code }
             if (courseCodes.any { it.matches(Regex(""".*[78]\d{3}.*""")) }) {
-                _studentType.value = StudentType.POSTGRADUATE
+                setStudentType(StudentType.POSTGRADUATE)
             }
         }
         saveCourses()
@@ -888,7 +913,8 @@ class BPlanRepository(private val context: Context) {
     }
 
     fun selectWeek(week: Int) {
-        _currentWeek.value = week.coerceIn(1, 20)
+        val maxWk = if (_studentType.value == StudentType.POSTGRADUATE) 14 else 16
+        _currentWeek.value = week.coerceIn(1, maxWk)
     }
 
     /**
@@ -975,8 +1001,27 @@ class BPlanRepository(private val context: Context) {
     }
 
     /**
+     * 触发全自动后台静默登录并同步课表与作业待办
+     */
+    suspend fun triggerSilentAuthAndSync(forceReauth: Boolean = false): Result<String> {
+        val res = silentAuthEngine.executeSilentAuthAndSync(forceReauth)
+        if (res.isSuccess) {
+            val now = TrustedTimeManager.getTrustedTimeMillis()
+            _lastGsasSyncTime.value = now
+            _lastIspaceSyncTime.value = now
+            prefs.edit()
+                .putLong("last_gsas_sync_time", now)
+                .putLong("last_ispace_sync_time", now)
+                .apply()
+            updateCurrentWeekForToday()
+            userHasResetData = false
+        }
+        return res
+    }
+
+    /**
      * 每次打开软件自动同步一次：
-     * 若已配置认证信息，后台自动尝试静默同步
+     * 若已配置认证信息，后台自动尝试静默同步；若凭据失效或缺失，全自动触发后台静默认证
      */
     suspend fun autoSyncOnAppLaunch() {
         if (userHasResetData || !_hasAgreedUserAgreement.value) {
@@ -988,32 +1033,44 @@ class BPlanRepository(private val context: Context) {
             TrustedTimeManager.syncTime()
         } catch (_: Exception) {}
 
-        if (_isSsoAuthorized.value) {
-            if (gsasToken.isNotBlank()) {
-                try {
-                    val result = gsasSyncManager.syncTimetable(gsasToken)
-                    if (result.isSuccess) {
-                        val now = TrustedTimeManager.getTrustedTimeMillis()
-                        _lastGsasSyncTime.value = now
-                        prefs.edit().putLong("last_gsas_sync_time", now).apply()
-                    }
-                } catch (_: Exception) {}
-            }
+        updateCurrentWeekForToday()
 
-            if (ispaceCookie.isNotBlank()) {
-                try {
-                    val sess = if (ispaceSesskey.isNotBlank()) ispaceSesskey else "default"
-                    val result = ispaceSyncManager.syncDdls(sess, ispaceCookie)
-                    if (result.isSuccess) {
-                        val now = TrustedTimeManager.getTrustedTimeMillis()
-                        _lastIspaceSyncTime.value = now
-                        prefs.edit().putLong("last_ispace_sync_time", now).apply()
-                        try {
-                            ispaceSyncManager.syncAllCourseTutorials(ispaceCookie)
-                        } catch (_: Exception) {}
-                    }
-                } catch (_: Exception) {}
-            }
+        var didSyncGsas = false
+        var didSyncIspace = false
+
+        if (_isSsoAuthorized.value && gsasToken.isNotBlank()) {
+            try {
+                val result = gsasSyncManager.syncTimetable(gsasToken)
+                if (result.isSuccess) {
+                    val now = TrustedTimeManager.getTrustedTimeMillis()
+                    _lastGsasSyncTime.value = now
+                    prefs.edit().putLong("last_gsas_sync_time", now).apply()
+                    didSyncGsas = true
+                }
+            } catch (_: Exception) {}
+        }
+
+        if (_isSsoAuthorized.value && ispaceCookie.isNotBlank()) {
+            try {
+                val sess = if (ispaceSesskey.isNotBlank()) ispaceSesskey else "default"
+                val result = ispaceSyncManager.syncDdls(sess, ispaceCookie)
+                if (result.isSuccess) {
+                    val now = TrustedTimeManager.getTrustedTimeMillis()
+                    _lastIspaceSyncTime.value = now
+                    prefs.edit().putLong("last_ispace_sync_time", now).apply()
+                    try {
+                        ispaceSyncManager.syncAllCourseTutorials(ispaceCookie)
+                    } catch (_: Exception) {}
+                    didSyncIspace = true
+                }
+            } catch (_: Exception) {}
+        }
+
+        // 若直接 API 同步未完成（如 Token/Cookie 已过期），但保存有硬件加密账号密码，全自动触发后台静默重登
+        if ((!didSyncGsas || !didSyncIspace) && hasSecureCredentials.value) {
+            try {
+                triggerSilentAuthAndSync(forceReauth = false)
+            } catch (_: Exception) {}
         }
 
         try {

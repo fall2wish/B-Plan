@@ -38,6 +38,7 @@ import cn.edu.bnbu.bplan.data.model.ScheduleEvent
 import cn.edu.bnbu.bplan.data.repository.BPlanRepository
 import cn.edu.bnbu.bplan.ui.components.*
 import cn.edu.bnbu.bplan.ui.theme.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -56,6 +57,7 @@ fun TimetableScreen(
     val currentWeek by repository.currentWeek.collectAsState()
     val periodSlots by repository.periodSlots.collectAsState()
     val guardAction = LocalAgreementGuard.current
+    val scope = rememberCoroutineScope()
 
     var selectedCourse by remember { mutableStateOf<Course?>(null) }
     var editingCourse by remember { mutableStateOf<Course?>(null) }
@@ -140,7 +142,24 @@ fun TimetableScreen(
                     onSelectWeek = { repository.selectWeek(it) },
                     onOpenWeekPicker = { showWeekPickerDialog = true },
                     onOpenAcademicCalendar = { showAcademicCalendarDialog = true },
-                    onAddCourse = { showAddCourseDialog = true }
+                    onAddCourse = { showAddCourseDialog = true },
+                    onSync = {
+                        guardAction {
+                            scope.launch {
+                                if (repository.hasSecureCredentials.value) {
+                                    Toast.makeText(context, "正在全自动静默同步课表与作业...", Toast.LENGTH_SHORT).show()
+                                    val res = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                    if (res.isSuccess) {
+                                        Toast.makeText(context, "课表与作业已成功同步！", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, res.exceptionOrNull()?.message ?: "同步未完成", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else {
+                                    Toast.makeText(context, "请先在设置中保存学号密码即可全自动同步", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
                 )
             },
             modifier = Modifier.padding(paddingValues)
@@ -355,7 +374,8 @@ private fun TimetableTopBar(
     onSelectWeek: (Int) -> Unit,
     onOpenWeekPicker: () -> Unit,
     onOpenAcademicCalendar: () -> Unit,
-    onAddCourse: () -> Unit
+    onAddCourse: () -> Unit,
+    onSync: () -> Unit
 ) {
     Surface(
         color = SurfaceLight,
@@ -452,6 +472,20 @@ private fun TimetableTopBar(
                             color = BnbuNavy
                         )
                     }
+                }
+
+                Spacer(modifier = Modifier.width(1.5.dp))
+
+                IconButton(
+                    onClick = onSync,
+                    modifier = Modifier.size(26.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Sync,
+                        contentDescription = "同步课表与作业",
+                        tint = BnbuNavy,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
 
                 Spacer(modifier = Modifier.width(1.5.dp))

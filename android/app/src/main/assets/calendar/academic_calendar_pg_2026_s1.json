@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "semesterId": "2026-2027-1-PG",
+  "academicYear": "2026/27",
+  "semesterNumber": 1,
+  "university": "BEIJING NORMAL-HONG KONG BAPTIST UNIVERSITY",
+  "title": "Class Schedule for Graduate Programmes (Semester I, AY2026/27)",
+  "shortTitle": "2026/27 第一学期研究生周表",
+  "approvalInfo": "Approved by Graduate School & Academic Registry",
+  "startDate": "2026-09-01",
+  "endDate": "2026-12-13",
+  "firstDayOfClasses": "2026-09-01",
+  "lastDayOfClasses": "2026-12-13",
+  "totalWeeks": 14,
+  "holidays": [
+    {
+      "id": "mid-autumn",
+      "name": "中秋节 (Mid-Autumn Festival)",
+      "startDate": "2026-09-25",
+      "endDate": "2026-09-27",
+      "isClassSuspended": true,
+      "targetStudentType": "ALL",
+      "ugSuspended": true,
+      "pgSuspended": true,
+      "description": "中秋节法定假期，停课放假"
+    },
+    {
+      "id": "national-day",
+      "name": "国庆节假期 (National Day holidays)",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-07",
+      "isClassSuspended": true,
+      "targetStudentType": "ALL",
+      "ugSuspended": true,
+      "pgSuspended": true,
+      "description": "国庆节法定假期，停课放假"
+    }
+  ],
+  "makeupDays": [],
+  "events": [
+    {
+      "date": "2026-09-01",
+      "title": "Semester I Begins / First Day of Classes for Graduate Programmes",
+      "category": "CLASSES_START",
+      "weekNumber": 1
+    },
+    {
+      "date": "2026-09-25",
+      "endDate": "2026-09-27",
+      "title": "Mid-Autumn Festival (中秋节)",
+      "category": "HOLIDAY",
+      "weekNumber": 4
+    },
+    {
+      "date": "2026-10-01",
+      "endDate": "2026-10-07",
+      "title": "National Day holidays (国庆节)",
+      "category": "HOLIDAY",
+      "weekNumber": 5
+    },
+    {
+      "date": "2026-12-13",
+      "title": "Last Day of Classes for Graduate Programmes (结课日)",
+      "category": "CLASSES_END",
+      "weekNumber": 14
+    }
+  ],
+  "remarks": [
+    "研究生周表共计 14 周教学周，无自主阅读周 (Reading Week)",
+    "第 5 周跨国庆假期切分 (9月28日~30日及10月8日~11日同属第5教学周)",
+    "中秋与国庆期间无调休补课日 (9月20日与10月10日为普通周末)"
+  ],
+  "originalImageUrl": "https://raw.githubusercontent.com/fall2wish/B-Plan/main/calendars/academic_calendar_pg_2026_s1.png",
+  "originalImageAsset": "calendar/academic_calendar_pg_2026_s1.png"
+}

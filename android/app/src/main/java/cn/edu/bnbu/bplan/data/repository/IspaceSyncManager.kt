@@ -77,26 +77,48 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
 
             for (evElem in events) {
                 val ev = evElem.asJsonObject
-                val id = ev.get("id")?.asString ?: continue
-                val name = ev.get("activityname")?.asString ?: ev.get("name")?.asString ?: "Assignment"
+                val id = ev.get("id")?.asString ?: ""
+                val rawActivityName = ev.get("activityname")?.asString?.trim() ?: ""
+                val rawName = ev.get("name")?.asString?.trim() ?: "Assignment"
+                val rawUrl = ev.get("url")?.asString
+                val desc = ev.get("description")?.asString
                 val timesort = ev.get("timesort")?.asLong ?: ev.get("timestart")?.asLong ?: (System.currentTimeMillis() / 1000)
                 val courseObj = ev.getAsJsonObject("course")
                 val courseName = courseObj?.get("fullname")?.asString ?: courseObj?.get("shortname")?.asString ?: "iSpace Course"
-                val rawUrl = ev.get("url")?.asString
-                val desc = ev.get("description")?.asString
 
-                val cleanCourse = courseName.replace(Regex("""\[Semester \d+ of \d+-\d+\]"""), "").trim()
+                // 清洗课程名：去除学期标识及教师名后缀
+                val cleanCourse = courseName
+                    .replace(Regex("""\[Semester\s+\d+\s+of\s+\d+-\d+\]""", RegexOption.IGNORE_CASE), "")
+                    .replace(Regex("""\((Prof\.|Dr\.|Mr\.|Ms\.)[^\)]+\)"""), "")
+                    .trim()
 
-                // 精准匹配 BNBU 真实作业归属与截止时间
-                val isExercise1 = id == "354734" || id == "116512" || name.contains("Exercise 1", ignoreCase = true)
-                val isPythonAssign1 = id == "364739" || (name.contains("Assignment 1", ignoreCase = true) && cleanCourse.contains("Python", ignoreCase = true))
-                val isSimAssign1 = id == "376275" || (name.contains("Assignment 1", ignoreCase = true) && cleanCourse.contains("Simulation", ignoreCase = true))
-                val isGameWinner = id == "376245" || name.contains("Game Winner", ignoreCase = true)
-                val isAiot = id == "84837" || name.contains("AIOT", ignoreCase = true) || cleanCourse.contains("Academic Integrity", ignoreCase = true)
+                // 清洗任务标题：提取干净的活动名
+                val cleanTitle = if (rawActivityName.isNotBlank()) {
+                    rawActivityName
+                } else {
+                    rawName.replace(Regex("""\s+is\s+due$""", RegexOption.IGNORE_CASE), "")
+                           .replace(Regex("""\s+closes$""", RegexOption.IGNORE_CASE), "")
+                           .trim()
+                }
 
-                val (finalCourse, finalTitle, finalDue, isSub, subTime, subFiles, finalUrl, finalDesc) = when {
+                // 检查模块类型与动作信息 (mod_assign, mod_quiz, mod_feedback)
+                val component = ev.get("component")?.asString ?: "mod_assign"
+                val actionObj = ev.getAsJsonObject("action")
+                val actionName = actionObj?.get("name")?.asString?.trim() ?: ""
+                val actionUrl = actionObj?.get("url")?.asString ?: rawUrl
+                val isOverdue = ev.get("overdue")?.asBoolean ?: false
+                val isQuiz = component == "mod_quiz" || rawUrl?.contains("/mod/quiz/") == true
+
+                // 历史预设比对 (保留既有已提交附件与测验的兼容详情)
+                val isExercise1 = id == "354734" || id == "116512" || rawName.contains("Exercise 1", ignoreCase = true)
+                val isPythonAssign1 = id == "364739" || (rawName.contains("Assignment 1", ignoreCase = true) && cleanCourse.contains("Python", ignoreCase = true))
+                val isSimAssign1 = id == "376275" || (rawName.contains("Assignment 1", ignoreCase = true) && cleanCourse.contains("Simulation", ignoreCase = true))
+                val isGameWinner = id == "376245" || rawName.contains("Game Winner", ignoreCase = true)
+                val isAiot = id == "84837" || rawName.contains("AIOT", ignoreCase = true) || cleanCourse.contains("Academic Integrity", ignoreCase = true)
+
+                val (finalCourse, finalTitle, finalDue, isSub, subTime, subFiles, finalUrl, finalDesc, statusText) = when {
                     isExercise1 -> {
-                        Tuple8(
+                        Tuple9(
                             "Data Analytics with Programming",
                             "Exercise 1 (HackerRank Submission)",
                             1789737000000L, // 2026-09-18 21:10:00
@@ -107,11 +129,12 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                                 cn.edu.bnbu.bplan.data.model.SubmittedFile("9495c442-8d90-4262-8efe-eae13f9170ab.png", "289.1 KB", rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=354734", 1789562820000L)
                             ),
                             rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=354734",
-                            "Take a screen shot of your personal page with your ID name (using your name and BNBU email address) and points earned on HackerRank. And upload the screenshot to Ex1."
+                            "Take a screen shot of your personal page with your ID name (using your name and BNBU email address) and points earned on HackerRank. And upload the screenshot to Ex1.",
+                            "已提交以供评分 (Submitted for grading)"
                         )
                     }
                     isPythonAssign1 -> {
-                        Tuple8(
+                        Tuple9(
                             "Python for Data Science",
                             "Assignment 1",
                             1789660740000L, // 2026-09-17 23:59:00
@@ -121,11 +144,12 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                                 cn.edu.bnbu.bplan.data.model.SubmittedFile("DSBS 7030_Assignment1.pdf", "245.5 KB", rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=364739", 1789441080000L)
                             ),
                             rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=364739",
-                            "Deadline: Sept. 17th 23:59 DSBS 7030_Assignment1.pdf"
+                            "Deadline: Sept. 17th 23:59 DSBS 7030_Assignment1.pdf",
+                            "已提交以供评分 (Submitted for grading)"
                         )
                     }
                     isSimAssign1 -> {
-                        Tuple8(
+                        Tuple9(
                             "Simulation Modelling",
                             "Assignment 1",
                             1791388740000L, // 2026-10-07 23:59:00
@@ -133,11 +157,12 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                             null,
                             emptyList(),
                             rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=376275",
-                            "Deadline: Oct. 7th, 2026. Your submission should include a written report and R program (.R or .Rmd)."
+                            "Deadline: Oct. 7th, 2026. Your submission should include a written report and R program (.R or .Rmd).",
+                            "待提交 (Pending submission)"
                         )
                     }
                     isGameWinner -> {
-                        Tuple8(
+                        Tuple9(
                             "Simulation Modelling",
                             "Game Winner Problem-20260913",
                             1789267020000L, // 2026-09-13 10:37:00
@@ -148,11 +173,12 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                                 cn.edu.bnbu.bplan.data.model.SubmittedFile("Game Winner Problem.docx", "14.2 KB", rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=376245", 1789266960000L)
                             ),
                             rawUrl ?: "https://ispace.bnbu.edu.cn/mod/assign/view.php?id=376245",
-                            "Game Winner Problem in-class simulation exercise."
+                            "Game Winner Problem in-class simulation exercise.",
+                            "已提交以供评分 (Submitted for grading)"
                         )
                     }
                     isAiot -> {
-                        Tuple8(
+                        Tuple9(
                             "Academic Integrity Online Tutorial",
                             "2026-27 学术诚信在线教程 (AIOT) 结课测试",
                             1789737000000L,
@@ -160,19 +186,51 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                             1789266960000L,
                             emptyList(),
                             rawUrl ?: "https://ispace.bnbu.edu.cn/mod/feedback/view.php?id=266937",
-                            "全体学生需通过线上考试达到80分以上，并签署学术诚信声明。"
+                            "全体学生需通过线上考试达到80分以上，并签署学术诚信声明。",
+                            "已签署学术诚信声明 (Completed)"
                         )
                     }
                     else -> {
-                        Tuple8(
+                        // 通用智能识别
+                        var dynamicSubmitted = false
+                        var dynamicStatus: String? = null
+                        when {
+                            actionName.contains("Edit submission", ignoreCase = true) || actionName.contains("重新提交", ignoreCase = true) -> {
+                                dynamicSubmitted = true
+                                dynamicStatus = "已提交以供评分 (Submitted for grading)"
+                            }
+                            actionName.contains("Review", ignoreCase = true) || actionName.contains("查看反馈", ignoreCase = true) -> {
+                                dynamicSubmitted = true
+                                dynamicStatus = "测验已完成 (Quiz completed)"
+                            }
+                            actionName.contains("Add submission", ignoreCase = true) -> {
+                                dynamicSubmitted = false
+                                dynamicStatus = if (isOverdue) "已逾期待补交 (Overdue)" else "待提交 (Pending submission)"
+                            }
+                            actionName.contains("Attempt quiz", ignoreCase = true) -> {
+                                dynamicSubmitted = false
+                                dynamicStatus = if (isOverdue) "测验已截止 (Quiz closed)" else "堂上测验待完成 (Quiz open)"
+                            }
+                            isQuiz -> {
+                                dynamicSubmitted = false
+                                dynamicStatus = if (isOverdue) "测验已截止 (Quiz closed)" else "堂上测验待完成"
+                            }
+                            else -> {
+                                dynamicSubmitted = false
+                                dynamicStatus = if (isOverdue) "已逾期 (Overdue)" else null
+                            }
+                        }
+
+                        Tuple9(
                             cleanCourse,
-                            name,
+                            cleanTitle,
                             timesort * 1000L,
-                            false,
+                            dynamicSubmitted,
                             null,
                             emptyList(),
-                            rawUrl,
-                            desc
+                            actionUrl ?: rawUrl,
+                            desc,
+                            dynamicStatus
                         )
                     }
                 }
@@ -187,7 +245,7 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
                         url = finalUrl,
                         description = finalDesc,
                         submittedAt = subTime,
-                        submissionStatusText = if (isSub) "已提交以供评分 (Submitted for grading)" else null,
+                        submissionStatusText = statusText,
                         gradingStatusText = if (isSub) "尚未评分 (Not graded)" else null,
                         submittedFiles = subFiles
                     )
@@ -511,6 +569,11 @@ class IspaceSyncManager(private val repository: BPlanRepository) {
     private data class Tuple8<A, B, C, D, E, F, G, H>(
         val first: A, val second: B, val third: C, val fourth: D,
         val fifth: E, val sixth: F, val seventh: G, val eighth: H
+    )
+
+    private data class Tuple9<A, B, C, D, E, F, G, H, I>(
+        val first: A, val second: B, val third: C, val fourth: D,
+        val fifth: E, val sixth: F, val seventh: G, val eighth: H, val ninth: I
     )
 }
 

@@ -107,6 +107,21 @@ fun DdlCard(
                                 modifier = Modifier.weight(1f, fill = false)
                             )
 
+                            if (ddl.url?.contains("/mod/quiz/") == true || ddl.title.contains("practice", ignoreCase = true) || ddl.title.contains("quiz", ignoreCase = true)) {
+                                Surface(
+                                    shape = RoundedCornerShape(4.dp),
+                                    color = Color(0xFFF3E8FF)
+                                ) {
+                                    Text(
+                                        text = "测验/练习",
+                                        fontSize = 9.sp,
+                                        color = Color(0xFF7E22CE),
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp)
+                                    )
+                                }
+                            }
+
                             // Countdown Badge
                             CountdownBadge(ddl)
                         }

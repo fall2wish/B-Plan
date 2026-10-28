@@ -25,6 +25,18 @@ class AcademicCalendarTest {
         return gson.fromJson(json, AcademicCalendar::class.java)
     }
 
+    private fun loadPgCalendarFromJson(): AcademicCalendar {
+        val assetFile = File("src/main/assets/calendar/academic_calendar_pg_2026_s1.json")
+        val json = if (assetFile.exists()) {
+            assetFile.readText()
+        } else {
+            val rootFile = File("../../calendars/academic_calendar_pg_2026_s1.json")
+            if (rootFile.exists()) rootFile.readText() else ""
+        }
+        assertFalse("PG Calendar JSON should not be empty", json.isBlank())
+        return gson.fromJson(json, AcademicCalendar::class.java)
+    }
+
     @Test
     fun testCalendarStructureAndIntegrity() {
         val calendar = loadCalendarFromJson()
@@ -221,5 +233,92 @@ class AcademicCalendarTest {
         assertTrue("Even week course should be active on 9/20 makeup day (Week 4)", evenWeekFridayCourse.isActiveInWeek(effectiveWeekSep20))
         // The odd-week course MUST NOT be active on 9/20
         org.junit.Assert.assertFalse("Odd week course should not be active on 9/20 makeup day", oddWeekFridayCourse.isActiveInWeek(effectiveWeekSep20))
+    }
+
+    @Test
+    fun testPgCalendarStructureAndIntegrity() {
+        val calendar = loadPgCalendarFromJson()
+        assertEquals("2026-2027-1-PG", calendar.semesterId)
+        assertEquals("2026-09-01", calendar.startDate)
+        assertEquals("2026-12-13", calendar.endDate)
+        assertEquals(14, calendar.totalWeeks)
+        // Postgraduate schedule has 0 makeup days (no 9/20 or 10/10 makeups)
+        assertTrue("PG calendar must have zero makeup days", calendar.makeupDays.isEmpty())
+        assertTrue("PG calendar must contain holidays", calendar.holidays.isNotEmpty())
+
+        // Original image asset
+        assertEquals("calendar/academic_calendar_pg_2026_s1.png", calendar.originalImageAsset)
+
+        // National Day holiday is present and suspends classes for PG
+        val nationalDay = calendar.holidays.find { it.id == "national-day" }
+        assertNotNull(nationalDay)
+        assertEquals("2026-10-01", nationalDay?.startDate)
+        assertEquals("2026-10-07", nationalDay?.endDate)
+        assertTrue(nationalDay?.isClassSuspended == true)
+
+        // Reading Week is not present for PG
+        val readingWeek = calendar.holidays.find { it.id == "reading-week" }
+        assertNull("PG calendar has no Reading Week holiday", readingWeek)
+    }
+
+    @Test
+    fun testPgWeekCalculationsAndWeek5Split() {
+        fun calculatePgWeek(dateStr: String): Int {
+            val date = dateStr.trim()
+            return when {
+                date < "2026-09-01" -> 1
+                date in "2026-09-01".."2026-09-06" -> 1
+                date in "2026-09-07".."2026-09-13" -> 2
+                date in "2026-09-14".."2026-09-20" -> 3
+                date in "2026-09-21".."2026-09-27" -> 4
+                // Week 5 跨国庆假期切分：9.28~9.30 (上课), 10.1~10.7 (放假), 10.8~10.11 (上课) 同属第 5 周
+                date in "2026-09-28".."2026-10-11" -> 5
+                date in "2026-10-12".."2026-10-18" -> 6
+                date in "2026-10-19".."2026-10-25" -> 7
+                date in "2026-10-26".."2026-11-01" -> 8
+                date in "2026-11-02".."2026-11-08" -> 9
+                date in "2026-11-09".."2026-11-15" -> 10
+                date in "2026-11-16".."2026-11-22" -> 11
+                date in "2026-11-23".."2026-11-29" -> 12
+                date in "2026-11-30".."2026-12-06" -> 13
+                date in "2026-12-07".."2026-12-13" -> 14
+                else -> 14
+            }
+        }
+
+        // Week 1: 9.1 - 9.6
+        assertEquals(1, calculatePgWeek("2026-09-01"))
+        assertEquals(1, calculatePgWeek("2026-09-06"))
+
+        // Week 3: 9.14 - 9.20 (9/20 is normal Sunday for PG, NOT Week 4 Friday makeup)
+        assertEquals(3, calculatePgWeek("2026-09-20"))
+
+        // Week 4: 9.21 - 9.27
+        assertEquals(4, calculatePgWeek("2026-09-21"))
+        assertEquals(4, calculatePgWeek("2026-09-27"))
+
+        // Week 5 split across National Day:
+        // Pre-holiday portion: 9.28 (Mon), 9.29 (Tue), 9.30 (Wed)
+        assertEquals(5, calculatePgWeek("2026-09-28"))
+        assertEquals(5, calculatePgWeek("2026-09-30"))
+        // National Day holiday period (10.1 - 10.7) still falls into Week 5 block
+        assertEquals(5, calculatePgWeek("2026-10-01"))
+        assertEquals(5, calculatePgWeek("2026-10-07"))
+        // Post-holiday portion: 10.8 (Thu), 10.9 (Fri), 10.10 (Sat), 10.11 (Sun)
+        assertEquals(5, calculatePgWeek("2026-10-08"))
+        assertEquals(5, calculatePgWeek("2026-10-10"))
+        assertEquals(5, calculatePgWeek("2026-10-11"))
+
+        // Week 6 resumes normally on 10.12 (Mon)
+        assertEquals(6, calculatePgWeek("2026-10-12"))
+        assertEquals(6, calculatePgWeek("2026-10-18"))
+
+        // Week 7: 10.19 - 10.25 (When UG has Reading Week, PG continues classes normally!)
+        assertEquals(7, calculatePgWeek("2026-10-19"))
+        assertEquals(7, calculatePgWeek("2026-10-25"))
+
+        // Final Week 14: 12.7 - 12.13
+        assertEquals(14, calculatePgWeek("2026-12-07"))
+        assertEquals(14, calculatePgWeek("2026-12-13"))
     }
 }

@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 fun DdlScreen(repository: BPlanRepository) {
     val guardAction = LocalAgreementGuard.current
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val ddls by repository.ddls.collectAsState()
     var selectedTab by remember { mutableStateOf(0) }
     var searchQuery by remember { mutableStateOf("") }
@@ -107,14 +108,27 @@ fun DdlScreen(repository: BPlanRepository) {
                     IconButton(
                         onClick = {
                             guardAction {
-                                val updated = repository.checkAllSubmissions()
-                                Toast.makeText(context, "已检查提交状态 (刷新了 $updated 项)", Toast.LENGTH_SHORT).show()
+                                scope.launch {
+                                    if (repository.hasSecureCredentials.value) {
+                                        Toast.makeText(context, "正在后台静默同步 iSpace 最新待办...", Toast.LENGTH_SHORT).show()
+                                        val res = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                        if (res.isSuccess) {
+                                            Toast.makeText(context, "iSpace 待办已成功同步！", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            val updated = repository.checkAllSubmissions()
+                                            Toast.makeText(context, "已离线刷新 $updated 项状态", Toast.LENGTH_SHORT).show()
+                                        }
+                                    } else {
+                                        val updated = repository.checkAllSubmissions()
+                                        Toast.makeText(context, "已检查提交状态 (刷新了 $updated 项)", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             }
                         }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "检查提交状态",
+                            contentDescription = "同步 iSpace 待办",
                             tint = BnbuNavy
                         )
                     }

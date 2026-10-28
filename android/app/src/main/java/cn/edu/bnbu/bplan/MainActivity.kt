@@ -31,8 +31,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
+import cn.edu.bnbu.bplan.ui.components.CampusCredentialDialog
+import cn.edu.bnbu.bplan.ui.components.CampusWebAuthDialog
 import cn.edu.bnbu.bplan.ui.components.LocalAgreementGuard
 import cn.edu.bnbu.bplan.ui.components.UserAgreementDialog
+import cn.edu.bnbu.bplan.ui.components.WebSyncTarget
+import cn.edu.bnbu.bplan.ui.theme.BnbuBlue
 import cn.edu.bnbu.bplan.util.LocaleHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -93,10 +97,23 @@ fun MainAppScaffold(repository: BPlanRepository) {
     )
     var currentScreen by remember { mutableStateOf<Screen>(Screen.Timetable) }
     val hasAgreedUserAgreement by repository.hasAgreedUserAgreement.collectAsState()
+    val hasSecureCredentials by repository.hasSecureCredentials.collectAsState()
     var showAgreementDialog by remember { mutableStateOf(!hasAgreedUserAgreement) }
+    var showFirstTimeCredentialDialog by remember { mutableStateOf(false) }
     var showRestrictedNoticeDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    val isSilentAuthenticating by repository.isSilentAuthenticating.collectAsState()
+    val silentAuthProgress by repository.silentAuthProgress.collectAsState()
+    val requiresManualIntervention by repository.requiresManualIntervention.collectAsState()
+    var showManualFallbackDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(requiresManualIntervention) {
+        if (requiresManualIntervention) {
+            showManualFallbackDialog = true
+        }
+    }
 
     val guardAction: (() -> Unit) -> Unit = { action ->
         if (hasAgreedUserAgreement) {
@@ -112,8 +129,12 @@ fun MainAppScaffold(repository: BPlanRepository) {
             onAccept = {
                 repository.setHasAgreedUserAgreement(true)
                 showAgreementDialog = false
-                scope.launch(Dispatchers.IO) {
-                    repository.autoSyncOnAppLaunch()
+                if (!hasSecureCredentials) {
+                    showFirstTimeCredentialDialog = true
+                } else {
+                    scope.launch(Dispatchers.IO) {
+                        repository.autoSyncOnAppLaunch()
+                    }
                 }
             },
             onBrowseOnly = {
@@ -121,6 +142,40 @@ fun MainAppScaffold(repository: BPlanRepository) {
             },
             onDismiss = {
                 showAgreementDialog = false
+            }
+        )
+    }
+
+    if (showFirstTimeCredentialDialog) {
+        CampusCredentialDialog(
+            repository = repository,
+            onDismiss = {
+                showFirstTimeCredentialDialog = false
+            },
+            onSaveAndSync = {
+                showFirstTimeCredentialDialog = false
+                scope.launch(Dispatchers.IO) {
+                    repository.triggerSilentAuthAndSync(forceReauth = false)
+                }
+            },
+            onCleared = {
+                showFirstTimeCredentialDialog = false
+            }
+        )
+    }
+
+    if (showManualFallbackDialog) {
+        CampusWebAuthDialog(
+            repository = repository,
+            initialTarget = WebSyncTarget.GSAS,
+            forceReauth = false,
+            onDismiss = {
+                showManualFallbackDialog = false
+                repository.resetManualInterventionFlag()
+            },
+            onSyncSuccess = {
+                showManualFallbackDialog = false
+                repository.resetManualInterventionFlag()
             }
         )
     }
@@ -255,6 +310,43 @@ fun MainAppScaffold(repository: BPlanRepository) {
                                     color = BnbuNavy,
                                     fontWeight = FontWeight.Bold
                                 )
+                            }
+                        }
+                    }
+
+                    if (isSilentAuthenticating) {
+                        Surface(
+                            color = BnbuBlue.copy(alpha = 0.08f),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column {
+                                LinearProgressIndicator(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(2.5.dp),
+                                    color = BnbuNavy,
+                                    trackColor = BnbuBlue.copy(alpha = 0.2f)
+                                )
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 14.dp, vertical = 5.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Sync,
+                                        contentDescription = null,
+                                        tint = BnbuBlue,
+                                        modifier = Modifier.size(13.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = silentAuthProgress.ifBlank { "正在全自动静默同步教务课表与 iSpace 待办..." },
+                                        fontSize = 11.5.sp,
+                                        color = BnbuNavy,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                }
                             }
                         }
                     }

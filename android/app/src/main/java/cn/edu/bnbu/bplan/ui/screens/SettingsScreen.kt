@@ -243,16 +243,16 @@ fun SettingsScreen(repository: BPlanRepository) {
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Column {
                                     Text(
-                                        text = if (isSsoAuthorized) "网页登录凭据已就绪" else "网页一键登录同步",
+                                        text = if (isSsoAuthorized) "网页登录凭据已就绪" else "网页辅助登录与验证",
                                         fontWeight = FontWeight.SemiBold,
                                         fontSize = 13.sp,
                                         color = BnbuNavy
                                     )
                                     Text(
                                         text = if (isSsoAuthorized) {
-                                            "点击可打开网页重新登录或更新凭据（登录有效期很短，预估每次同步都需手动登录）"
+                                            "日常数据均在后台全自动静默同步；若遇验证码或密码修改可点此打开网页辅助登录"
                                         } else {
-                                            "弹窗登录教务系统与教学平台自动提取课表与作业（登录有效期很短，预估每次同步都需手动登录）"
+                                            "保存学号密码后系统将全自动后台静默登录；若遇验证码可点此人工辅助登录"
                                         },
                                         fontSize = 11.sp,
                                         color = TextSecondary
@@ -311,19 +311,43 @@ fun SettingsScreen(repository: BPlanRepository) {
                         Button(
                             onClick = {
                                 guardAction {
-                                    if (repository.gsasToken.isBlank()) {
-                                        webAuthInitialTarget = WebSyncTarget.GSAS
-                                        showCampusWebAuthDialog = true
-                                    } else {
-                                        isSyncingGsas = true
-                                        scope.launch {
+                                    isSyncingGsas = true
+                                    scope.launch {
+                                        if (repository.gsasToken.isBlank()) {
+                                            if (hasSecureCredentials) {
+                                                val silentRes = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                                isSyncingGsas = false
+                                                if (silentRes.isSuccess) {
+                                                    snackbarHostState.showSnackbar("GSAS 课表已全自动静默同步！")
+                                                } else {
+                                                    webAuthInitialTarget = WebSyncTarget.GSAS
+                                                    showCampusWebAuthDialog = true
+                                                }
+                                            } else {
+                                                isSyncingGsas = false
+                                                webAuthInitialTarget = WebSyncTarget.GSAS
+                                                showCampusWebAuthDialog = true
+                                            }
+                                        } else {
                                             val res = repository.syncGsasTimetable()
-                                            isSyncingGsas = false
                                             if (res.isSuccess) {
+                                                isSyncingGsas = false
                                                 snackbarHostState.showSnackbar("GSAS 课表同步完成！")
                                             } else {
-                                                val err = res.exceptionOrNull()?.message ?: "同步失败"
-                                                snackbarHostState.showSnackbar(err)
+                                                if (hasSecureCredentials) {
+                                                    val silentRes = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                                    isSyncingGsas = false
+                                                    if (silentRes.isSuccess) {
+                                                        snackbarHostState.showSnackbar("已自动重登并更新 GSAS 课表！")
+                                                    } else {
+                                                        val err = res.exceptionOrNull()?.message ?: "同步失败"
+                                                        snackbarHostState.showSnackbar(err)
+                                                    }
+                                                } else {
+                                                    isSyncingGsas = false
+                                                    val err = res.exceptionOrNull()?.message ?: "同步失败"
+                                                    snackbarHostState.showSnackbar(err)
+                                                }
                                             }
                                         }
                                     }
@@ -337,7 +361,7 @@ fun SettingsScreen(repository: BPlanRepository) {
                                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
                             } else {
                                 Text(
-                                    text = if (repository.gsasToken.isBlank()) "登录同步" else stringResource(R.string.settings_gsas_sync_btn),
+                                    text = if (repository.gsasToken.isBlank() && !hasSecureCredentials) "登录同步" else stringResource(R.string.settings_gsas_sync_btn),
                                     fontSize = 12.sp
                                 )
                             }
@@ -387,19 +411,43 @@ fun SettingsScreen(repository: BPlanRepository) {
                         Button(
                             onClick = {
                                 guardAction {
-                                    if (repository.ispaceCookie.isBlank()) {
-                                        webAuthInitialTarget = WebSyncTarget.ISPACE
-                                        showCampusWebAuthDialog = true
-                                    } else {
-                                        isSyncingIspace = true
-                                        scope.launch {
+                                    isSyncingIspace = true
+                                    scope.launch {
+                                        if (repository.ispaceCookie.isBlank()) {
+                                            if (hasSecureCredentials) {
+                                                val silentRes = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                                isSyncingIspace = false
+                                                if (silentRes.isSuccess) {
+                                                    snackbarHostState.showSnackbar("iSpace 待办已全自动静默同步！")
+                                                } else {
+                                                    webAuthInitialTarget = WebSyncTarget.ISPACE
+                                                    showCampusWebAuthDialog = true
+                                                }
+                                            } else {
+                                                isSyncingIspace = false
+                                                webAuthInitialTarget = WebSyncTarget.ISPACE
+                                                showCampusWebAuthDialog = true
+                                            }
+                                        } else {
                                             val res = repository.syncIspaceData()
-                                            isSyncingIspace = false
                                             if (res.isSuccess) {
+                                                isSyncingIspace = false
                                                 snackbarHostState.showSnackbar("iSpace 作业列表同步成功！")
                                             } else {
-                                                val err = res.exceptionOrNull()?.message ?: "同步失败"
-                                                snackbarHostState.showSnackbar(err)
+                                                if (hasSecureCredentials) {
+                                                    val silentRes = repository.triggerSilentAuthAndSync(forceReauth = false)
+                                                    isSyncingIspace = false
+                                                    if (silentRes.isSuccess) {
+                                                        snackbarHostState.showSnackbar("已自动重登并更新 iSpace 待办！")
+                                                    } else {
+                                                        val err = res.exceptionOrNull()?.message ?: "同步失败"
+                                                        snackbarHostState.showSnackbar(err)
+                                                    }
+                                                } else {
+                                                    isSyncingIspace = false
+                                                    val err = res.exceptionOrNull()?.message ?: "同步失败"
+                                                    snackbarHostState.showSnackbar(err)
+                                                }
                                             }
                                         }
                                     }
@@ -413,7 +461,7 @@ fun SettingsScreen(repository: BPlanRepository) {
                                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
                             } else {
                                 Text(
-                                    text = if (repository.ispaceCookie.isBlank()) "登录同步" else stringResource(R.string.settings_ispace_sync_btn),
+                                    text = if (repository.ispaceCookie.isBlank() && !hasSecureCredentials) "登录同步" else stringResource(R.string.settings_ispace_sync_btn),
                                     fontSize = 12.sp
                                 )
                             }
@@ -792,11 +840,9 @@ fun SettingsScreen(repository: BPlanRepository) {
             onDismiss = { showCampusCredentialDialog = false },
             onSaveAndSync = {
                 showCampusCredentialDialog = false
-                webAuthInitialTarget = WebSyncTarget.GSAS
-                webAuthForceReauth = true
-                showCampusWebAuthDialog = true
                 scope.launch {
-                    snackbarHostState.showSnackbar("账号凭据已安全硬件加密保存！正在同步数据...")
+                    snackbarHostState.showSnackbar("账号凭据已安全硬件加密保存！正在全自动静默同步...")
+                    repository.triggerSilentAuthAndSync(forceReauth = false)
                 }
             },
             onCleared = {
