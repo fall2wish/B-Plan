@@ -107,7 +107,7 @@
 
     <string name="settings_about_title">About B-Plan</string>
     <string name="settings_about_desc">B-Plan is a campus schedule and assignment manager tailored for BNBU students, providing one-stop synchronization for timetable, iSpace deadlines, and campus events.</string>
-    <string name="settings_version_info">Version: 1.0.0 (Release) · License: CC BY-NC-SA 4.0\nAcademic Year: 2026-2027 Semester 1</string>
+    <string name="settings_version_info">Version: 1.0.1 (Release) · License: CC BY-NC-SA 4.0\nAcademic Year: 2026-2027 Semester 1</string>
 
     <!-- Academic Calendar Dialog -->
     <string name="calendar_dialog_title">2026/27 Semester 1 Academic Calendar</string>

@@ -108,7 +108,7 @@
 
     <string name="settings_about_title">關於 B-Plan</string>
     <string name="settings_about_desc">B-Plan 是專為北師香港浸會大學 (BNBU) 同學研發的校園日程與作業管家，提供教務課表、iSpace 作業待辦與校園日程一站式同步服務。</string>
-    <string name="settings_version_info">版本: 1.0.0 (Release) · 許可: CC BY-NC-SA 4.0\n適用: 2026-2027 學年第一學期</string>
+    <string name="settings_version_info">版本: 1.0.1 (Release) · 許可: CC BY-NC-SA 4.0\n適用: 2026-2027 學年第一學期</string>
 
     <!-- Academic Calendar Dialog -->
     <string name="calendar_dialog_title">2026/27 第一學期校歷</string>
